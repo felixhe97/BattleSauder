@@ -1,6 +1,8 @@
 from flask import Flask, request
 app = Flask(__name__)
 
+#TODO HEROKU redis and psql?
+
 @app.route("/")
 def battlesnake_info():
     return {
