@@ -1,13 +1,14 @@
 from flask import Flask, request
 app = Flask(__name__)
 
-#TODO HEROKU redis and psql?
-
 @app.route("/")
 def battlesnake_info():
     return {
         "apiversion": "0.1",
-        "author": "felixhe97"
+        "author": "felixhe97",
+        "color": "#FFFFFF",
+        "head": "pixel",
+        "tail": "pixel"
     }
 
 @app.route("/start", methods=["POST"])
