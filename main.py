@@ -1,3 +1,11 @@
+import os
+import redis
+import psycopg2
+
+conn = psycopg2.connect(os.environ['DATABASE_URL'], sslmode='require')
+
+r = redis.from_url(os.environ.get("REDIS_URL"))
+
 from flask import Flask, request
 app = Flask(__name__)
 
