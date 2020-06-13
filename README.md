@@ -1,10 +1,21 @@
 # BattleSauder
 Communitech BattleSnake implementation
 
-Can run locally, but meant to be run on heroku.
+## Requirements
 
-Requires heroku cli, git cli.
+Can run locally, but meant to be run on heroku. Therefore, 
+requires heroku and git to be installed and set up.
 
-Clone this repository, then type in 'heroku create' in directory.
-Then type in 'git push heroku master', and finally 'heroku open'
-to check if its working by having it respond to your web browser.
+## Start
+
+Clone this repository, then go to cloned directory.
+
+On command line while within cloned directory:
+
+```bash
+heroku create
+git push heroku master
+heroku open
+```
+
+A browser page should be opened with JSON response - success!
