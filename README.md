@@ -15,6 +15,7 @@ On command line while within cloned directory:
 ```bash
 heroku create
 git push heroku master
+heroku config:set WEB_CONCURRENCY=3
 heroku open
 ```
 
