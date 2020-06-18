@@ -1,7 +1,7 @@
-from .myredis import r
-from .db import conn
+# from .myredis import r
+# from .db import conn
 
-import utils
+from .utils import EMPTY, FOOD, INDEXSTART
 
 def createsnakeobj(snake, index, graph):
     coordarr = []
@@ -18,13 +18,13 @@ def createsnakeobj(snake, index, graph):
     return snakeObj
 
 def initboard(mi, mj, foodarr, opponents, mysnake):
-    matrix = [[utils.EMPTY] * mi for i in range(mj)]
+    matrix = [[EMPTY] * mi for i in range(mj)]
     tempfood = []
     for food in foodarr:
-        matrix[food['x']][food['y']] = utils.FOOD
+        matrix[food['x']][food['y']] = FOOD
         tempfood.append([food['x'],food['y']])
     snakemap = {}
-    index = utils.INDEXSTART
+    index = INDEXSTART
     for snake in opponents:
         snakemap[index] = createsnakeobj(snake, index, matrix)
         index = index + 1
