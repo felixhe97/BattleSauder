@@ -1,11 +1,3 @@
-import os
-import redis
-import psycopg2
-
-conn = psycopg2.connect(os.environ['DATABASE_URL'], sslmode='require')
-
-r = redis.from_url(os.environ.get("REDIS_URL"))
-
 from flask import Flask, request
 app = Flask(__name__)
 
@@ -21,21 +13,12 @@ def battlesnake_info():
 
 @app.route("/start", methods=["POST"])
 def init_game():
-    reqBody = request.json
-    print(request)
-    return ""
+    return commands.start(request.json)
 
 @app.route("/move", methods=["POST"])
 def move_snake():
-    reqBody = request.json
-    print(reqBody["game"])
-    return {
-        "move": "up",
-        "shout": "moving up I guess"
-    }
+    return commands.move(request.json)
 
 @app.route("/end", methods=["POST"])
 def end_game():
-    reqBody = request.json
-    print(request)
-    return ""
+    return commands.end(request.json)
