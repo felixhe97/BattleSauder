@@ -1,7 +1,7 @@
-import .myredis
-import .db
+from .myredis import r
+from .db import conn
 
-import .utils
+import utils
 
 def createsnakeobj(snake, index, graph):
     coordarr = []
