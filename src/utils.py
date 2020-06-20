@@ -18,17 +18,17 @@ def printfood(food):
 
 # from x y graphics to x y cartesian
 def moveup() -> dict:
-    print("left")
+    print("up")
     return {'move': 'left', 'shout': 'gangg'}
 
 def moveleft() -> dict:
-    print("down")
+    print("left")
     return {'move': 'down', 'shout': 'ganggangg'}
 
 def moveright() -> dict:
-    print("up")
+    print("right")
     return {'move': 'up', 'shout': 'swerve'}
 
 def movedown() -> dict:
-    print("right")
+    print("down")
     return {'move': 'right', 'shout': 'skrrrt'}
