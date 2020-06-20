@@ -3,12 +3,6 @@ from typing import Callable
 from .utils import FOOD, INDEXSTART, moveup, movedown, moveleft, moveright
 import random
 
-"""
-def distance(x: int, y: int):
-    return abs(x[0] - y[0]) + abs(x[1] - y[1])
-"""
-
-
 def bfsfood(canvisit: list, board: list, myhead: list) -> list:
     q = SimpleQueue()
     q.put(myhead)
@@ -34,7 +28,6 @@ def bfsfood(canvisit: list, board: list, myhead: list) -> list:
             qsize = qsize - 1
         level = level + 1
     return nearestfood
-
 
 def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
     q = SimpleQueue()

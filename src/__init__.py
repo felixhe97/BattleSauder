@@ -34,10 +34,8 @@ def end(jsonobj: dict) -> str:
 
 def start(jsonobj: dict) -> Union[dict, str]:
     if 'you' in jsonobj:
-        # start game with you in it
-        ds = initboard(jsonobj['board']['width'], jsonobj['board']['height'],
+        ds = initboard(jsonobj['board']['height'], jsonobj['board']['width'],
             jsonobj['board']['food'], jsonobj['board']['snakes'])
-        # inmem[jsonobj['game']['id']] = ds
         return nextmove(ds['board'], ds['food'], ds['snakes'])()
     else:
         return ''
