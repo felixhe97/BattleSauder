@@ -38,7 +38,7 @@ def start(jsonobj: dict) -> Union[dict, str]:
         ds = initboard(jsonobj['board']['width'], jsonobj['board']['height'],
             jsonobj['board']['food'], jsonobj['board']['snakes'])
         # inmem[jsonobj['game']['id']] = ds
-        return nextmove(ds['board'], ds['food'], ds['snakes'])
+        return nextmove(ds['board'], ds['food'], ds['snakes'])()
     else:
         return ''
 
