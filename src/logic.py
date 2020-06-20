@@ -45,11 +45,11 @@ def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
     myy = mysnake['head'][1]
     if myx > 0 and canvisit[myx-1][myy]:
         nearbyopenspace.append(moveup)
-    if myx < len(board) and canvisit[myx+1][myy]:
+    if myx < len(board) - 1 and canvisit[myx+1][myy]:
         nearbyopenspace.append(movedown)
     if myy > 0 and canvisit[myx][myy-1]:
         nearbyopenspace.append(moveleft)
-    if myy < len(board[0]) and canvisit[myx][myy+1]:
+    if myy < len(board[0]) - 1 and canvisit[myx][myy+1]:
         nearbyopenspace.append(moveright)
     for snake in snakes:
         for key, coord in snake['body']:
@@ -68,11 +68,11 @@ def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
     canmove = []
     if myx > 0 and canvisit[myx-1][myy]:
         canmove.append(moveup)
-    if myx < len(board) and canvisit[myx+1][myy]:
+    if myx < len(board) - 1 and canvisit[myx+1][myy]:
         canmove.append(movedown)
     if myy > 0 and canvisit[myx][myy-1]:
         canmove.append(moveleft)
-    if myy < len(board[0]) and canvisit[myx][myy+1]:
+    if myy < len(board[0]) - 1 and canvisit[myx][myy+1]:
         canmove.append(moveright)
     if mysnake['hp'] < (len(board) * 2) and canmove.count > 0:
         nearestfood = bfsfood(canvisit, board, mysnake['head'])
