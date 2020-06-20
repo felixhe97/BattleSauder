@@ -10,8 +10,8 @@ def bfsfood(canvisit: list, board: list, myhead: list) -> list:
     nearestfood = []
     level = 0
     while not q.empty():
-        qsize = q.qsize()
-        while qsize > 0:
+        size = q.qsize()
+        while size > 0:
             coord = q.get()
             x = coord[0]
             y = coord[1]
@@ -22,22 +22,22 @@ def bfsfood(canvisit: list, board: list, myhead: list) -> list:
                 q.put([x-1, y])
             if x < len(canvisit) - 1 and canvisit[x+1][y]:
                 q.put([x+1, y])
-            if coord[1] > 0 and canvisit[x][y-1]:
+            if y > 0 and canvisit[x][y-1]:
                 q.put([x, y-1])
-            if coord[1] < len(canvisit[0]) - 1 and canvisit[x][y+1]:
+            if y < len(canvisit[0]) - 1 and canvisit[x][y+1]:
                 q.put([x, y+1])
-            qsize = qsize - 1
+            size = size - 1
         level = level + 1
     return nearestfood
 
 def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
     canvisit = [[True] * len(board) for i in range(len(board[0]))]
     mysnake = snakes[INDEXSTART]
-    nearbyopenspace = []
     myx = mysnake['head'][0]
     myy = mysnake['head'][1]
     for coord in mysnake['body']:
         canvisit[coord[0]][coord[1]] = False
+    nearbyopenspace = []
     if myx > 0 and canvisit[myx-1][myy]:
         nearbyopenspace.append(moveup)
     if myx < len(board) - 1 and canvisit[myx+1][myy]:
@@ -46,6 +46,7 @@ def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
         nearbyopenspace.append(moveleft)
     if myy < len(board[0]) - 1 and canvisit[myx][myy+1]:
         nearbyopenspace.append(moveright)
+    """
     for key, snake in snakes.items():
         if snake != mysnake and snake['hp'] > mysnake['hp']:
             for coord in snake['body']:
@@ -60,6 +61,7 @@ def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
                 canvisit[enemyx][enemyy-1] = False
             if enemyy < len(board[0]) - 1:
                 canvisit[enemyx][enemyy+1] = False
+    """
     canmove = []
     if myx > 0 and canvisit[myx-1][myy]:
         canmove.append(moveup)
@@ -87,11 +89,16 @@ def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
         elif myy > nearestfood[0][1] and nearestfood[0][1] != 0:
             if moveleft in canmove:
                 tofood.append(moveleft)
-        return random.choice(tofood)
+        if tofood.count > 0:
+            return random.choice(tofood)
+        elif nearbyopenspace.count > 0:
+            return random.choice(nearbyopenspace)
+        else:
+            return moveup
     else:
         if canmove.count == 0:
             if nearbyopenspace.count == 0:
-                return moveup()
+                return moveup
             else:
                 return random.choice(nearbyopenspace)
         else:
