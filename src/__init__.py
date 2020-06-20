@@ -1,9 +1,7 @@
-# from .myredis import r
-# from .db import conn
-
 from .utils import EMPTY, FOOD, INDEXSTART
+from .logic import nextmove
 
-def createsnakeobj(snake, index, graph):
+def createsnakeobj(snake: dict, index: int, graph: list[list[int]]) -> dict:
     coordarr = []
     for coord in snake['body']:
         coordarr.append([coord['x'], coord['y']])
@@ -17,7 +15,7 @@ def createsnakeobj(snake, index, graph):
             }
     return snakeObj
 
-def initboard(mi, mj, foodarr, opponents, mysnake):
+def initboard(mi: int, mj: int, foodarr: list[dict], opponents: list[dict]) -> dict:
     matrix = [[EMPTY] * mi for i in range(mj)]
     tempfood = []
     for food in foodarr:
@@ -30,40 +28,18 @@ def initboard(mi, mj, foodarr, opponents, mysnake):
         index = index + 1
     return {'board': matrix, 'food': tempfood, 'snakes': snakemap}
 
-def merge(prevstate, newinfo):
-    # TODO
-    return
+def end(jsonobj: dict) -> str:
+    return ''
 
-def nextmove(board, food, snakes):
-    # TODO
-    return
-
-inmem = {}
-
-def end(jsonobj):
-    # todo store info, win/lose
-    gameid = jsonobj['game']['id']
-    if gameid in inmem:
-        inmem.pop(gameid)
-    return
-
-def move(jsonobj):
-    gameid = jsonobj['game']['id']
-    if 'you' in jsonobj and gameid in inmem:
-        merge(inmem[gameid], jsonobj)
-        return nextmove(inmem[gameid]['board'], inmem[gameid]['food'],
-                inmem[gameid]['snakes'])
-    else:
-        # not in game
-        return
-
-def start(jsonobj):
+def start(jsonobj: dict) -> Union[dict, str]:
     if 'you' in jsonobj:
         # start game with you in it
         ds = initboard(jsonobj['board']['width'], jsonobj['board']['height'],
-            jsonobj['board']['food'], jsonobj['board']['snakes'],
-            jsonobj['you'])
-        inmem[jsonobj['game']['id']] = ds
+            jsonobj['board']['food'], jsonobj['board']['snakes'])
+        # inmem[jsonobj['game']['id']] = ds
         return nextmove(ds['board'], ds['food'], ds['snakes'])
     else:
-        return
+        return ''
+
+def move(jsonobj: dict) -> Union[dict, str]:
+    return start(jsonobj)

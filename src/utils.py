@@ -16,14 +16,15 @@ def printfood(food):
     for x in food:
         print(x)
 
+# from x y graphics to x y cartesian
 def moveup():
-    return {'move': 'up', 'shout': 'gangg'}
+    return {'move': 'left', 'shout': 'gangg'}
 
 def moveleft():
-    return {'move': 'left', 'shout': 'ganggangg'}
+    return {'move': 'down', 'shout': 'ganggangg'}
 
 def moveright():
-    return {'move': 'right', 'shout': 'swerve'}
+    return {'move': 'up', 'shout': 'swerve'}
 
 def movedown():
-    return {'move': 'down', 'shout': 'skrrrt'}
+    return {'move': 'right', 'shout': 'skrrrt'}
