@@ -52,8 +52,7 @@ def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
     if myy < len(board[0]) and canvisit[myx][myy+1]:
         nearbyopenspace.append(moveright)
     for snake in snakes:
-        for coord in snake['body']:
-            print(coord)
+        for key, coord in snake['body']:
             canvisit[coord[0]][coord[1]] = False
         if snake != mysnake and snake['hp'] > mysnake['hp']:
             enemyx = snake['head'][0]
