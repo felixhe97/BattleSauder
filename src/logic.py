@@ -8,7 +8,8 @@ def distance(x: int, y: int):
     return abs(x[0] - y[0]) + abs(x[1] - y[1])
 """
 
-def bfsfood(canvisit: list[list[bool]], board: list[list[int]], myhead: list[int]) -> list[list[int]]:
+
+def bfsfood(canvisit: list, board: list, myhead: list) -> list:
     q = SimpleQueue()
     q.put(myhead)
     nearestfood = []
@@ -17,7 +18,7 @@ def bfsfood(canvisit: list[list[bool]], board: list[list[int]], myhead: list[int
         qsize = q.qsize()
         while qsize > 0:
             coord = q.get()
-            x = coord[0]    
+            x = coord[0]
             y = coord[1]
             canvisit[x][y] = False
             if board[x][y] == FOOD:
@@ -34,7 +35,8 @@ def bfsfood(canvisit: list[list[bool]], board: list[list[int]], myhead: list[int
         level = level + 1
     return nearestfood
 
-def nextmove(board: list[list[int]], food: list[list], snakes: list[dict]) -> Callable[[], dict]:
+
+def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
     q = SimpleQueue()
     canvisit = [[True] * len(board) for i in range(len(board[0]))]
     mysnake = snakes[INDEXSTART]
@@ -62,7 +64,7 @@ def nextmove(board: list[list[int]], food: list[list], snakes: list[dict]) -> Ca
             if enemyy > 0:
                 canvisit[enemyx][enemyy-1] = False
             if enemyy < len(board[0]) - 1:
-                canvisit[enemyx][enemyy+1] = False  
+                canvisit[enemyx][enemyy+1] = False
     canmove = []
     if myx > 0 and canvisit[myx-1][myy]:
         canmove.append(moveup)

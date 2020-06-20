@@ -1,7 +1,8 @@
 from .utils import EMPTY, FOOD, INDEXSTART
 from .logic import nextmove
+from typing import Union
 
-def createsnakeobj(snake: dict, index: int, graph: list[list[int]]) -> dict:
+def createsnakeobj(snake: dict, index: int, graph: list) -> dict:
     coordarr = []
     for coord in snake['body']:
         coordarr.append([coord['x'], coord['y']])
@@ -15,7 +16,7 @@ def createsnakeobj(snake: dict, index: int, graph: list[list[int]]) -> dict:
             }
     return snakeObj
 
-def initboard(mi: int, mj: int, foodarr: list[dict], opponents: list[dict]) -> dict:
+def initboard(mi: int, mj: int, foodarr: list, opponents: list) -> dict:
     matrix = [[EMPTY] * mi for i in range(mj)]
     tempfood = []
     for food in foodarr:
