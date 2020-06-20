@@ -36,7 +36,7 @@ def bfsfood(canvisit: list, board: list, myhead: list) -> list:
     return nearestfood
 
 
-def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
+def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
     q = SimpleQueue()
     canvisit = [[True] * len(board) for i in range(len(board[0]))]
     mysnake = snakes[INDEXSTART]
@@ -51,8 +51,8 @@ def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
         nearbyopenspace.append(moveleft)
     if myy < len(board[0]) - 1 and canvisit[myx][myy+1]:
         nearbyopenspace.append(moveright)
-    for snake in snakes:
-        for key, coord in snake['body']:
+    for key, snake in snakes.items():
+        for coord in snake['body']:
             canvisit[coord[0]][coord[1]] = False
         if snake != mysnake and snake['hp'] > mysnake['hp']:
             enemyx = snake['head'][0]
