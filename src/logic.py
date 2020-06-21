@@ -32,12 +32,13 @@ def bfsfood(canvisit: list, board: list, myhead: list) -> list:
 
 def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
     canvisit = [[True] * len(board[0]) for i in range(len(board))]
+    for snake in snakes:
+        for coord in snake:
+            canvisit[coord[0]][coord[1]] = False
+    canmove = []
     mysnake = snakes[INDEXSTART]
     myx = mysnake['head'][0]
     myy = mysnake['head'][1]
-    for coord in mysnake['body']:
-        canvisit[coord[0]][coord[1]] = False
-    canmove = []
     if myx > 0 and canvisit[myx-1][myy]:
         canmove.append(moveup)
     if myx < len(board) - 1 and canvisit[myx+1][myy]:
@@ -48,17 +49,19 @@ def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
         canmove.append(moveright)
     if mysnake['hp'] < (len(board) * 2) and canmove.count > 0:
         nearestfood = bfsfood(canvisit, board, mysnake['head'])
+        nearestfoodx = nearestfood[0]
+        nearestfoody = nearestfood[1]
         tofood = []
-        if myx < nearestfood[0][0]:
+        if myx < nearestfoodx:
             if movedown in canmove:
                 tofood.append(movedown)
-        elif myx > nearestfood[0][0] and nearestfood[0][0] != 0:
+        elif myx > nearestfoodx and myx > 0:
             if moveup in canmove:
                 tofood.append(moveup)
-        if myy < nearestfood[0][1]:
+        if myy < nearestfoody:
             if moveright in canmove:
                 tofood.append(moveright)
-        elif myy > nearestfood[0][1] and nearestfood[0][1] != 0:
+        elif myy > nearestfoody and myy > 0:
             if moveleft in canmove:
                 tofood.append(moveleft)
         if tofood.count > 0:
