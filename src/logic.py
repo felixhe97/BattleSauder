@@ -72,8 +72,7 @@ def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
     if myy < len(board[0]) - 1 and canvisit[myx][myy+1]:
         canmove.append(moveright)
     printbattlesnakeboard(board)
-    printsnakes(snakes)
-    printfood(food)
+    printboard(board)
     if mysnake['hp'] < (len(board) * 2) and canmove.count > 0:
         nearestfood = bfsfood(canvisit, board, mysnake['head'])
         tofood = []
