@@ -8,7 +8,7 @@ def battlesnake_info():
     return {
         "apiversion": "0.1",
         "author": "felixhe97",
-        "color": "#FFFFFF",
+        "color": "#BADFFF",
         "head": "pixel",
         "tail": "pixel"
     }

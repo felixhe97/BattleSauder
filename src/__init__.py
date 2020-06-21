@@ -19,7 +19,8 @@ def createsnakeobj(snake: dict, index: int, graph: list) -> dict:
     return snakeObj
 
 def initboard(width: int, height: int, foodarr: list, opponents: list) -> dict:
-    matrix = [[EMPTY] * width for i in range(height)]
+    # switch it to graphics x y
+    matrix = [[EMPTY] * height for i in range(width)]
     tempfood = []
     for food in foodarr:
         matrix[food['x']][food['y']] = FOOD
