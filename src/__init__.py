@@ -5,8 +5,10 @@ from typing import Union
 def createsnakeobj(snake: dict, index: int, graph: list) -> dict:
     coordarr = []
     for coord in snake['body']:
-        coordarr.append([coord['x'], coord['y']])
-        graph[coord['x']][coord['y']] = index
+        x = coord['x']
+        y = coord['y']
+        coordarr.append([x, y])
+        graph[x][y] = index
     snakeObj = {
             'id': snake['id'],
             'hp': snake['health'],
@@ -16,8 +18,8 @@ def createsnakeobj(snake: dict, index: int, graph: list) -> dict:
             }
     return snakeObj
 
-def initboard(mi: int, mj: int, foodarr: list, opponents: list) -> dict:
-    matrix = [[EMPTY] * mi for i in range(mj)]
+def initboard(width: int, height: int, foodarr: list, opponents: list) -> dict:
+    matrix = [[EMPTY] * width for i in range(height)]
     tempfood = []
     for food in foodarr:
         matrix[food['x']][food['y']] = FOOD
@@ -32,13 +34,10 @@ def initboard(mi: int, mj: int, foodarr: list, opponents: list) -> dict:
 def end(jsonobj: dict) -> str:
     return ''
 
-def start(jsonobj: dict) -> Union[dict, str]:
+def startmove(jsonobj: dict) -> Union[dict, str]:
     if 'you' in jsonobj:
-        ds = initboard(jsonobj['board']['height'], jsonobj['board']['width'],
+        ds = initboard(jsonobj['board']['width'], jsonobj['board']['height'],
             jsonobj['board']['food'], jsonobj['board']['snakes'])
         return nextmove(ds['board'], ds['food'], ds['snakes'])()
     else:
         return ''
-
-def move(jsonobj: dict) -> Union[dict, str]:
-    return start(jsonobj)

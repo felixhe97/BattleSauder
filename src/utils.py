@@ -6,13 +6,13 @@ INDEXSTART = 2
 
 # from x y graphics to x y cartesian
 def moveup() -> dict:
-    return {'move': 'up', 'shout': 'gangg'}
+    return {'move': 'left', 'shout': 'gangg'}
 
 def movedown() -> dict:
-    return {'move': 'down', 'shout': 'skrrrt'}
+    return {'move': 'right', 'shout': 'skrrrt'}
 
 def moveleft() -> dict:
-    return {'move': 'left', 'shout': 'ganggangg'}
+    return {'move': 'down', 'shout': 'ganggangg'}
 
 def moveright() -> dict:
-    return {'move': 'right', 'shout': 'swerve'}
+    return {'move': 'up', 'shout': 'swerve'}

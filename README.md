@@ -33,6 +33,8 @@ cd Scripts
 
 Then depending on OS, run relevant 'activate' script to get into virtual environment.
 
+After the script has run, you should now be within virtual environment. Then:
+
 ```bash
 cd ..
 pip install -r requirements.txt

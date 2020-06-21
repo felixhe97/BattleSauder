@@ -1,7 +1,7 @@
 from queue import SimpleQueue
 from typing import Callable
 from .utils import FOOD, INDEXSTART, moveup, movedown, moveleft, moveright
-from .printer import printboard, printfood, printsnakes
+from .printer import printbattlesnakeboard, printboard, printfood, printsnakes
 import random
 
 def bfsfood(canvisit: list, board: list, myhead: list) -> list:
@@ -71,9 +71,9 @@ def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
         canmove.append(moveleft)
     if myy < len(board[0]) - 1 and canvisit[myx][myy+1]:
         canmove.append(moveright)
-    printboard(board)
-    printfood(food)
+    printbattlesnakeboard(board)
     printsnakes(snakes)
+    printfood(food)
     if mysnake['hp'] < (len(board) * 2) and canmove.count > 0:
         nearestfood = bfsfood(canvisit, board, mysnake['head'])
         tofood = []

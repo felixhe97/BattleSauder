@@ -1,7 +1,7 @@
 from flask import Flask, request
 app = Flask(__name__)
 
-import src
+from src import startmove, end
 
 @app.route("/")
 def battlesnake_info():
@@ -15,12 +15,12 @@ def battlesnake_info():
 
 @app.route("/start", methods=["POST"])
 def init_game():
-    return src.start(request.json)
+    return startmove(request.json)
 
 @app.route("/move", methods=["POST"])
 def move_snake():
-    return src.move(request.json)
+    return startmove(request.json)
 
 @app.route("/end", methods=["POST"])
 def end_game():
-    return src.end(request.json)
+    return end(request.json)
