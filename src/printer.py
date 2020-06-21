@@ -3,9 +3,9 @@ def printboard(board: list) -> None:
         print(row)
 
 def printbattlesnakeboard(board: list) -> None:
-    for i in reversed(range(0, len(board[0]))):
-        for j in reversed(range(0, len(board))):
-            print(board[j][i], end='', flush=True)
+    for i in (range(0, len(board))):
+        for j in reversed(range(0, len(board[0]))):
+            print(board[i][j], end='', flush=True)
         print('')
 
 def printsnakes(snakes: dict) -> None:
