@@ -25,12 +25,12 @@ def initboard(width: int, height: int, foodarr: list, opponents: list) -> dict:
     for food in foodarr:
         matrix[food['x']][food['y']] = FOOD
         tempfood.append((food['x'],food['y']))
-    snakemap = {}
     index = INDEXSTART
+    snakearr = range(index)
     for snake in opponents:
-        snakemap[index] = createsnakeobj(snake, index, matrix)
+        snakearr.append(createsnakeobj(snake, index, matrix))
         index = index + 1
-    return {'board': matrix, 'food': tempfood, 'snakes': snakemap}
+    return {'board': matrix, 'food': tempfood, 'snakes': snakearr}
 
 def end(jsonobj: dict) -> str:
     return ''
