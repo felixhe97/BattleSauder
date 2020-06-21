@@ -26,7 +26,7 @@ def initboard(width: int, height: int, foodarr: list, opponents: list) -> dict:
         matrix[food['x']][food['y']] = FOOD
         tempfood.append((food['x'],food['y']))
     index = INDEXSTART
-    snakearr = range(index)
+    snakearr = [[] for i in range(index)]
     for snake in opponents:
         snakearr.append(createsnakeobj(snake, index, matrix))
         index = index + 1
