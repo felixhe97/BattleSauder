@@ -1,9 +1,12 @@
 # BattleSauder
-Communitech BattleSnake implementation
+[BattleSnake](https://play.battlesnake.com/) implementation
 
 ## Requirements
 
 Meant to be run on heroku. Recommended to have heroku and git installed and set up.
+
+requirements.txt has additional modules that allow integration with Heroku Redis and PostgreSQL,
+alongside quality of life dev tools like mypy.
 
 ## Start
 
