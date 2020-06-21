@@ -6,9 +6,9 @@ from src import startmove, end
 @app.route("/")
 def battlesnake_info():
     return {
-        "apiversion": "0.1",
+        "apiversion": "1",
         "author": "felixhe97",
-        "color": "#BADFFF",
+        "color": "#BADBAD",
         "head": "pixel",
         "tail": "pixel"
     }

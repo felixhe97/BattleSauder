@@ -31,7 +31,7 @@ def bfsfood(canvisit: list, board: list, myhead: list) -> list:
     return nearestfood
 
 def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
-    canvisit = [[True] * len(board) for i in range(len(board[0]))]
+    canvisit = [[True] * len(board[0]) for i in range(len(board))]
     mysnake = snakes[INDEXSTART]
     myx = mysnake['head'][0]
     myy = mysnake['head'][1]
