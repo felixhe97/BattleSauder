@@ -17,15 +17,15 @@ def bfsfood(canvisit: list, board: list, myhead: list) -> list:
             y = coord[1]
             canvisit[x][y] = False
             if board[x][y] == FOOD:
-                nearestfood.append([x, y, level])
+                nearestfood.append((x, y, level))
             if x > 0 and canvisit[x-1][y]:
-                q.put([x-1, y])
+                q.put((x-1, y))
             if x < len(canvisit) - 1 and canvisit[x+1][y]:
-                q.put([x+1, y])
+                q.put((x+1, y))
             if y > 0 and canvisit[x][y-1]:
-                q.put([x, y-1])
+                q.put((x, y-1))
             if y < len(canvisit[0]) - 1 and canvisit[x][y+1]:
-                q.put([x, y+1])
+                q.put((x, y+1))
             size = size - 1
         level = level + 1
     return nearestfood

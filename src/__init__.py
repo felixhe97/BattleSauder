@@ -7,13 +7,13 @@ def createsnakeobj(snake: dict, index: int, graph: list) -> dict:
     for coord in snake['body']:
         x = coord['x']
         y = coord['y']
-        coordarr.append([x, y])
+        coordarr.append((x, y))
         graph[x][y] = index
     snakeObj = {
             'id': snake['id'],
             'hp': snake['health'],
             'body': coordarr,
-            'head': [snake['head']['x'], snake['head']['y']],
+            'head': (snake['head']['x'], snake['head']['y']),
             'length': snake['length']
             }
     return snakeObj
@@ -23,7 +23,7 @@ def initboard(width: int, height: int, foodarr: list, opponents: list) -> dict:
     tempfood = []
     for food in foodarr:
         matrix[food['x']][food['y']] = FOOD
-        tempfood.append([food['x'],food['y']])
+        tempfood.append((food['x'],food['y']))
     snakemap = {}
     index = INDEXSTART
     for snake in opponents:

@@ -3,8 +3,8 @@ def printboard(board: list) -> None:
         print(row)
 
 def printbattlesnakeboard(board: list) -> None:
-    for i in range(len(board[0])-1, 0):
-        for j in range(len(board)-1, 0):
+    for i in reversed(range(0, len(board[0]))):
+        for j in reversed(range(0, len(board))):
             print(board[j][i], end='', flush=True)
         print('')
 
