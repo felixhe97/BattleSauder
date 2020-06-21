@@ -30,38 +30,13 @@ def bfsfood(canvisit: list, board: list, myhead: list) -> list:
         level = level + 1
     return nearestfood
 
-def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
+def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
     canvisit = [[True] * len(board[0]) for i in range(len(board))]
     mysnake = snakes[INDEXSTART]
     myx = mysnake['head'][0]
     myy = mysnake['head'][1]
     for coord in mysnake['body']:
         canvisit[coord[0]][coord[1]] = False
-    nearbyopenspace = []
-    if myx > 0 and canvisit[myx-1][myy]:
-        nearbyopenspace.append(moveup)
-    if myx < len(board) - 1 and canvisit[myx+1][myy]:
-        nearbyopenspace.append(movedown)
-    if myy > 0 and canvisit[myx][myy-1]:
-        nearbyopenspace.append(moveleft)
-    if myy < len(board[0]) - 1 and canvisit[myx][myy+1]:
-        nearbyopenspace.append(moveright)
-    """
-    for key, snake in snakes.items():
-        if snake != mysnake and snake['hp'] > mysnake['hp']:
-            for coord in snake['body']:
-                canvisit[coord[0]][coord[1]] = False
-            enemyx = snake['head'][0]
-            enemyy = snake['head'][1]
-            if enemyx > 0:
-                canvisit[enemyx-1][enemyy] = False
-            if enemyx < len(board) - 1:
-                canvisit[enemyx+1][enemyy] = False
-            if enemyy > 0:
-                canvisit[enemyx][enemyy-1] = False
-            if enemyy < len(board[0]) - 1:
-                canvisit[enemyx][enemyy+1] = False
-    """
     canmove = []
     if myx > 0 and canvisit[myx-1][myy]:
         canmove.append(moveup)
@@ -71,8 +46,6 @@ def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
         canmove.append(moveleft)
     if myy < len(board[0]) - 1 and canvisit[myx][myy+1]:
         canmove.append(moveright)
-    printbattlesnakeboard(board)
-    printboard(board)
     if mysnake['hp'] < (len(board) * 2) and canmove.count > 0:
         nearestfood = bfsfood(canvisit, board, mysnake['head'])
         tofood = []
@@ -90,15 +63,12 @@ def nextmove(board: list, food: list, snakes: dict) -> Callable[[], dict]:
                 tofood.append(moveleft)
         if tofood.count > 0:
             return random.choice(tofood)
-        elif nearbyopenspace.count > 0:
-            return random.choice(nearbyopenspace)
+        elif canmove.count > 0:
+            return random.choice(canmove)
         else:
             return moveup
     else:
         if canmove.count == 0:
-            if nearbyopenspace.count == 0:
-                return moveup
-            else:
-                return random.choice(nearbyopenspace)
+            return moveup
         else:
             return random.choice(canmove)
