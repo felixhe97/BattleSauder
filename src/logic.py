@@ -32,8 +32,9 @@ def bfsfood(canvisit: list, board: list, myhead: list) -> list:
 
 def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
     canvisit = [[True] * len(board[0]) for i in range(len(board))]
-    for snake in snakes:
-        for coord in snake:
+    for i in range(INDEXSTART, len(snakes)):
+        snake = snakes[i]
+        for coord in snake['body']:
             canvisit[coord[0]][coord[1]] = False
     canmove = []
     mysnake = snakes[INDEXSTART]
