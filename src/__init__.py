@@ -18,6 +18,13 @@ def createsnakeobj(snake: dict, index: int, graph: list) -> dict:
             }
     return snakeObj
 
+def parseopponents(matrix, index, opponents):
+    snakearr = [[] for i in range(index)]
+    for snake in opponents:
+        snakearr.append(createsnakeobj(snake, index, matrix))
+        index = index + 1
+    return snakearr
+
 def initboard(width: int, height: int, foodarr: list, opponents: list) -> dict:
     # switch it to graphics x y
     matrix = [[EMPTY] * height for i in range(width)]
@@ -25,20 +32,19 @@ def initboard(width: int, height: int, foodarr: list, opponents: list) -> dict:
     for food in foodarr:
         matrix[food['x']][food['y']] = FOOD
         tempfood.append((food['x'],food['y']))
-    index = INDEXSTART
-    snakearr = [[] for i in range(index)]
-    for snake in opponents:
-        snakearr.append(createsnakeobj(snake, index, matrix))
-        index = index + 1
+    snakearr = parseopponents(matrix, INDEXSTART, opponents)
     return {'board': matrix, 'food': tempfood, 'snakes': snakearr}
 
 def end(jsonobj: dict) -> str:
     return ''
 
-def startmove(jsonobj: dict) -> Union[dict, str]:
+def start(jsonobj: dict) -> Union[dict, str]:
     if 'you' in jsonobj:
         ds = initboard(jsonobj['board']['width'], jsonobj['board']['height'],
             jsonobj['board']['food'], jsonobj['board']['snakes'])
         return nextmove(ds['board'], ds['food'], ds['snakes'])()
     else:
         return ''
+
+def move(jsonobj: dict) -> Union[dict, str]:
+    return start(jsonobj)
