@@ -27,6 +27,8 @@ def parsefood(matrix, foodarr):
     return tempfood
 
 def parseopponents(matrix, index, opponents):
+    # fills snakearr with empty arrays so that to iterate over
+    # all snakes, use 'for i in range(INDEXSTART, len(snakearr))'
     snakearr = [[] for i in range(index)]
     for snake in opponents:
         snakearr.append(parsesnakeobj(snake, index, matrix))

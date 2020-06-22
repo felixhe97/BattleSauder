@@ -4,9 +4,9 @@ from .utils import FOOD, INDEXSTART, EMPTY, NOTEMPTY, moveup, movedown, moveleft
 from .printer import printbattlesnakeboard, printboard, printfood, printsnakes
 import random
 
-def bfsfood(board: list, myhead: list) -> list:
+def bfsfood(board: list, startingx: int, startingy: int) -> list:
     q = SimpleQueue()
-    q.put(myhead)
+    q.put((startingx, startingy))
     nearestfoodarr = []
     bfslevel = 0
     while not q.empty():
@@ -33,7 +33,7 @@ def bfsfood(board: list, myhead: list) -> list:
         bfslevel = bfslevel + 1
     return nearestfoodarr
 
-def directiontofood(canmove, myx, myy, foodx, foody):
+def directiontofood(canmove: list, myx: int, myy: int, foodx: int, foody: int):
     # TODO
     return []
 
@@ -59,7 +59,7 @@ def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
         return moveright
     else:
         if mysnake['hp'] < (len(board) * 2):
-            nearestfood = bfsfood(board, mysnake['head'])
+            nearestfood = bfsfood(board, myx, myy)
             foodx = nearestfood[0]
             foody = nearestfood[1]
             tofood = directiontofood(canmove, myx, myy, foodx, foody)
