@@ -1,78 +1,68 @@
 from queue import SimpleQueue
 from typing import Callable
-from .utils import FOOD, INDEXSTART, moveup, movedown, moveleft, moveright
+from .utils import FOOD, INDEXSTART, EMPTY, NOTEMPTY, moveup, movedown, moveleft, moveright
 from .printer import printbattlesnakeboard, printboard, printfood, printsnakes
 import random
 
-def bfsfood(canvisit: list, board: list, myhead: list) -> list:
+def bfsfood(board: list, myhead: list) -> list:
     q = SimpleQueue()
     q.put(myhead)
-    nearestfood = []
-    level = 0
+    nearestfoodarr = []
+    bfslevel = 0
     while not q.empty():
-        size = q.qsize()
-        while size > 0:
+        tempsize = q.qsize()
+        while tempsize > 0:
             coord = q.get()
             x = coord[0]
             y = coord[1]
-            canvisit[x][y] = False
+            # mark on gameboard that we visited empty space
+            if board[x][y] == EMPTY:
+                board[x][y] = NOTEMPTY
             if board[x][y] == FOOD:
-                nearestfood.append((x, y, level))
-            if x > 0 and canvisit[x-1][y]:
+                # also have travel distance as third element
+                nearestfoodarr.append((x, y, bfslevel))
+            if x > 0 and board[x-1][y] == EMPTY:
                 q.put((x-1, y))
-            if x < len(canvisit) - 1 and canvisit[x+1][y]:
+            if x < len(board) - 1 and board[x+1][y] == EMPTY:
                 q.put((x+1, y))
-            if y > 0 and canvisit[x][y-1]:
+            if y > 0 and board[x][y-1] == EMPTY:
                 q.put((x, y-1))
-            if y < len(canvisit[0]) - 1 and canvisit[x][y+1]:
+            if y < len(board[0]) - 1 and board[x][y+1] == EMPTY:
                 q.put((x, y+1))
-            size = size - 1
-        level = level + 1
-    return nearestfood
+            tempsize = tempsize - 1
+        bfslevel = bfslevel + 1
+    return nearestfoodarr
+
+def directiontofood(canmove, myx, myy, foodx, foody):
+    # TODO
+    return []
+
+def createavailablemoves(board, myx, myy):
+    validmove = []
+    if myx > 0 and board[myx-1][myy] == EMPTY:
+        validmove.append(moveup)
+    if myx < len(board) - 1 and board[myx+1][myy] == EMPTY:
+        validmove.append(movedown)
+    if myy > 0 and board[myx][myy-1] == EMPTY:
+        validmove.append(moveleft)
+    if myy < len(board[0]) - 1 and board[myx][myy+1] == EMPTY:
+        validmove.append(moveright)
+    return validmove
 
 def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
-    canvisit = [[True] * len(board[0]) for i in range(len(board))]
-    for i in range(INDEXSTART, len(snakes)):
-        snake = snakes[i]
-        for coord in snake['body']:
-            canvisit[coord[0]][coord[1]] = False
-    canmove = []
     mysnake = snakes[INDEXSTART]
     myx = mysnake['head'][0]
     myy = mysnake['head'][1]
-    if myx > 0 and canvisit[myx-1][myy]:
-        canmove.append(moveup)
-    if myx < len(board) - 1 and canvisit[myx+1][myy]:
-        canmove.append(movedown)
-    if myy > 0 and canvisit[myx][myy-1]:
-        canmove.append(moveleft)
-    if myy < len(board[0]) - 1 and canvisit[myx][myy+1]:
-        canmove.append(moveright)
-    if mysnake['hp'] < (len(board) * 2) and canmove.count > 0:
-        nearestfood = bfsfood(canvisit, board, mysnake['head'])
-        nearestfoodx = nearestfood[0]
-        nearestfoody = nearestfood[1]
-        tofood = []
-        if myx < nearestfoodx:
-            if movedown in canmove:
-                tofood.append(movedown)
-        elif myx > nearestfoodx and myx > 0:
-            if moveup in canmove:
-                tofood.append(moveup)
-        if myy < nearestfoody:
-            if moveright in canmove:
-                tofood.append(moveright)
-        elif myy > nearestfoody and myy > 0:
-            if moveleft in canmove:
-                tofood.append(moveleft)
-        if tofood.count > 0:
-            return random.choice(tofood)
-        elif canmove.count > 0:
-            return random.choice(canmove)
-        else:
-            return moveup
+    canmove = createavailablemoves(board, myx, myy)
+    if canmove.count == 0:
+        print('no valid moves')
+        return moveright
     else:
-        if canmove.count == 0:
-            return moveup
+        if mysnake['hp'] < (len(board) * 2):
+            nearestfood = bfsfood(board, mysnake['head'])
+            foodx = nearestfood[0]
+            foody = nearestfood[1]
+            tofood = directiontofood(canmove, myx, myy, foodx, foody)
+            return random.choice(tofood)
         else:
             return random.choice(canmove)

@@ -2,13 +2,14 @@ from .utils import EMPTY, FOOD, INDEXSTART
 from .logic import nextmove
 from typing import Union
 
-def createsnakeobj(snake: dict, index: int, graph: list) -> dict:
+def parsesnakeobj(snake: dict, index: int, gameboard: list) -> dict:
+    # marks gameboard while parsing snake body
     coordarr = []
     for coord in snake['body']:
         x = coord['x']
         y = coord['y']
         coordarr.append((x, y))
-        graph[x][y] = index
+        gameboard[x][y] = index
     snakeObj = {
             'id': snake['id'],
             'hp': snake['health'],
@@ -18,22 +19,26 @@ def createsnakeobj(snake: dict, index: int, graph: list) -> dict:
             }
     return snakeObj
 
+def parsefood(matrix, foodarr):
+    tempfood = []
+    for food in foodarr:
+        matrix[food['x']][food['y']] = FOOD
+        tempfood.append((food['x'],food['y']))
+    return tempfood
+
 def parseopponents(matrix, index, opponents):
     snakearr = [[] for i in range(index)]
     for snake in opponents:
-        snakearr.append(createsnakeobj(snake, index, matrix))
+        snakearr.append(parsesnakeobj(snake, index, matrix))
         index = index + 1
     return snakearr
 
 def initboard(width: int, height: int, foodarr: list, opponents: list) -> dict:
     # switch it to graphics x y
-    matrix = [[EMPTY] * height for i in range(width)]
-    tempfood = []
-    for food in foodarr:
-        matrix[food['x']][food['y']] = FOOD
-        tempfood.append((food['x'],food['y']))
-    snakearr = parseopponents(matrix, INDEXSTART, opponents)
-    return {'board': matrix, 'food': tempfood, 'snakes': snakearr}
+    gameboard = [[EMPTY] * height for i in range(width)]
+    tempfood = parsefood(gameboard, foodarr)
+    snakearr = parseopponents(gameboard, INDEXSTART, opponents)
+    return {'board': gameboard, 'food': tempfood, 'snakes': snakearr}
 
 def end(jsonobj: dict) -> str:
     return ''
