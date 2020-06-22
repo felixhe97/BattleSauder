@@ -5,7 +5,8 @@ from .printer import printbattlesnakeboard, printboard, printfood, printsnakes
 import random
 
 def bfsfood(board: list, startingx: int, startingy: int) -> list:
-    q = SimpleQueue()
+    # instantiation of queue with type annotation for mypy
+    q: SimpleQueue = SimpleQueue()
     q.put((startingx, startingy))
     nearestfoodarr = []
     bfslevel = 0
