@@ -1,19 +1,18 @@
-from queue import SimpleQueue
+from collections import deque
 from typing import Callable
 from .utils import FOOD, INDEXSTART, EMPTY, NOTEMPTY, moveup, movedown, moveleft, moveright
 from .printer import printbattlesnakeboard, printboard, printfood, printsnakes
 import random
 
 def bfsfood(board: list, startingx: int, startingy: int) -> list:
-    # instantiation of queue with type annotation for mypy
-    q: SimpleQueue = SimpleQueue()
-    q.put((startingx, startingy))
+    q = deque()
+    q.append((startingx, startingy))
     nearestfoodarr = []
     bfslevel = 0
-    while not q.empty():
-        tempsize = q.qsize()
+    while len(q) != 0:
+        tempsize = len(q)
         while tempsize > 0:
-            coord = q.get()
+            coord = q.popleft()
             x = coord[0]
             y = coord[1]
             # mark on gameboard that we visited empty space
@@ -23,13 +22,13 @@ def bfsfood(board: list, startingx: int, startingy: int) -> list:
                 # also have travel distance as third element
                 nearestfoodarr.append((x, y, bfslevel))
             if x > 0 and board[x-1][y] == EMPTY:
-                q.put((x-1, y))
+                q.append((x-1, y))
             if x < len(board) - 1 and board[x+1][y] == EMPTY:
-                q.put((x+1, y))
+                q.append((x+1, y))
             if y > 0 and board[x][y-1] == EMPTY:
-                q.put((x, y-1))
+                q.append((x, y-1))
             if y < len(board[0]) - 1 and board[x][y+1] == EMPTY:
-                q.put((x, y+1))
+                q.append((x, y+1))
             tempsize = tempsize - 1
         bfslevel = bfslevel + 1
     return nearestfoodarr
