@@ -1,12 +1,14 @@
 # BattleSauder
-[BattleSnake](https://play.battlesnake.com/) implementation
+[BattleSnake](https://play.battlesnake.com/) implementation.
+
+Note that code changes BattleSnake's x-y coordinates to graphics coordinates.
 
 ## Requirements
 
 Meant to be run on heroku. Recommended to have heroku and git installed and set up.
 
-requirements.txt has additional modules that allow integration with Heroku Redis and PostgreSQL,
-alongside quality of life dev tools like mypy.
+requirements.txt has additional modules that enable integration with Heroku Redis and PostgreSQL,
+alongside quality of life dev tools like mypy and pytest.
 
 ## Start
 
@@ -36,10 +38,9 @@ cd Scripts
 
 Then depending on OS, run relevant 'activate' script to get into virtual environment.
 
-After the script has run, you should now be within virtual environment. Then:
+After the script has run, you should now be within virtual environment. Then go to project directory, and enter:
 
 ```bash
-cd ..
 pip install -r requirements.txt
 flask run
 ```
