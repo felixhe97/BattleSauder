@@ -46,12 +46,12 @@ def end(jsonobj: dict) -> str:
     return ''
 
 def start(jsonobj: dict) -> Union[dict, str]:
+    return ''
+
+def move(jsonobj: dict) -> Union[dict, str]:
     if 'you' in jsonobj:
         ds = initboard(jsonobj['board']['width'], jsonobj['board']['height'],
             jsonobj['board']['food'], jsonobj['board']['snakes'])
         return nextmove(ds['board'], ds['food'], ds['snakes'])()
     else:
         return ''
-
-def move(jsonobj: dict) -> Union[dict, str]:
-    return start(jsonobj)

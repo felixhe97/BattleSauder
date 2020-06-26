@@ -46,3 +46,5 @@ flask run
 ```
 
 Head to http://120.0.0.1:5000/ with command line running to see JSON response - success!
+
+If you wish to run this local version on Heroku, simply follow steps in Start.
