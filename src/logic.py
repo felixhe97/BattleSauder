@@ -33,7 +33,7 @@ def bfsfood(board: list, startingx: int, startingy: int) -> list:
         bfslevel += 1
     return nearestfoodarr
 
-def directiontofood(canmove: list, myx: int, myy: int, foodx: int, foody: int):
+def directiontofood(canmove: list, myx: int, myy: int, foodx: int, foody: int) -> list:
     tofood = []
     if foodx > myx and movedown in canmove:
         tofood.append(movedown)
@@ -45,7 +45,7 @@ def directiontofood(canmove: list, myx: int, myy: int, foodx: int, foody: int):
         tofood.append(moveleft)
     return tofood
 
-def createavailablemoves(board, myx, myy):
+def createavailablemoves(board: list, myx: int, myy: int) -> list:
     validmove = []
     if myx > 0 and board[myx-1][myy] == EMPTY:
         validmove.append(moveup)

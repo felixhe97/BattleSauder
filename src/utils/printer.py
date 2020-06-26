@@ -1,3 +1,5 @@
+from .constants import INDEXSTART
+
 def printboard(board: list) -> None:
     for row in board:
         print(row)
@@ -8,9 +10,9 @@ def printbattlesnakeboard(board: list) -> None:
             print(board[i][j], end='', flush=True)
         print('')
 
-def printsnakes(snakes: dict) -> None:
-    for i, snake in snakes.items():
-        print(i, snake)
+def printsnakes(snakes: list) -> None:
+    for i in range(INDEXSTART + 1, len(snakes)):
+        print(snakes[i])
 
 def printfood(food: list) -> None:
     print(food)

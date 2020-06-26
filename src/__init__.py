@@ -19,17 +19,17 @@ def parsesnakeobj(snake: dict, index: int, gameboard: list) -> dict:
             }
     return snakeObj
 
-def parsefood(matrix, foodarr):
+def parsefood(matrix: list, foodarr: list) -> list:
     tempfood = []
     for food in foodarr:
         matrix[food['x']][food['y']] = FOOD
         tempfood.append((food['x'],food['y']))
     return tempfood
 
-def parseopponents(matrix, index, opponents):
+def parseopponents(matrix: list, index: int, opponents: list) -> list:
     # fills snakearr with empty arrays so that to iterate over
     # all snakes, use 'for i in range(INDEXSTART, len(snakearr))'
-    snakearr = [[] for i in range(index)]
+    snakearr: list = [[] for i in range(index)]
     for snake in opponents:
         snakearr.append(parsesnakeobj(snake, index, matrix))
         index = index + 1
@@ -45,7 +45,7 @@ def initboard(width: int, height: int, foodarr: list, opponents: list) -> dict:
 def end(jsonobj: dict) -> str:
     return ''
 
-def start(jsonobj: dict) -> Union[dict, str]:
+def start(jsonobj: dict) -> str:
     return ''
 
 def move(jsonobj: dict) -> Union[dict, str]:
