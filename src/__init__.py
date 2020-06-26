@@ -1,4 +1,4 @@
-from .utils import EMPTY, FOOD, INDEXSTART
+from .utils.constants import EMPTY, FOOD, INDEXSTART
 from .logic import nextmove
 from typing import Union
 

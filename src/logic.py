@@ -1,7 +1,8 @@
 from collections import deque
 from typing import Callable
-from .utils import FOOD, INDEXSTART, EMPTY, NOTEMPTY, moveup, movedown, moveleft, moveright
-from .printer import printbattlesnakeboard, printboard, printfood, printsnakes
+from .utils.constants import FOOD, INDEXSTART, EMPTY, NOTEMPTY
+from .utils.movement import moveup, movedown, moveleft, moveright
+from .utils.printer import printbattlesnakeboard, printboard, printfood, printsnakes
 import random
 
 def bfsfood(board: list, startingx: int, startingy: int) -> list:

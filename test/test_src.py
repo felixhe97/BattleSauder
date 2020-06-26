@@ -1,5 +1,5 @@
 from src import parsesnakeobj, parseopponents, parsefood, initboard, start, move, end
-from src.utils import EMPTY
+from src.utils.constants import EMPTY
 
 def test_parsesnakeobj():
     snake = {
