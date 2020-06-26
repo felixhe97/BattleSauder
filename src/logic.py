@@ -71,6 +71,10 @@ def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
             foodx = nearestfood[0]
             foody = nearestfood[1]
             tofood = directiontofood(canmove, myx, myy, foodx, foody)
+            print('called tofood')
+            print(tofood)
             return random.choice(tofood)
         else:
+            print('called canmove')
+            print(canmove)
             return random.choice(canmove)
