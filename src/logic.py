@@ -77,4 +77,7 @@ def nextmove(board: list, food: list, snakes: list) -> Callable[[], dict]:
         else:
             print('called canmove')
             print(canmove)
+            printbattlesnakeboard(board)
+            printsnakes(snakes)
+            printfood(food)
             return random.choice(canmove)
