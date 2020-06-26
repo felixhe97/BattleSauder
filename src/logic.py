@@ -5,7 +5,7 @@ from .printer import printbattlesnakeboard, printboard, printfood, printsnakes
 import random
 
 def bfsfood(board: list, startingx: int, startingy: int) -> list:
-    q = deque()
+    q: deque = deque()
     q.append((startingx, startingy))
     nearestfoodarr = []
     bfslevel = 0
@@ -29,13 +29,21 @@ def bfsfood(board: list, startingx: int, startingy: int) -> list:
                 q.append((x, y-1))
             if y < len(board[0]) - 1 and board[x][y+1] == EMPTY:
                 q.append((x, y+1))
-            tempsize = tempsize - 1
-        bfslevel = bfslevel + 1
+            tempsize -= 1
+        bfslevel += 1
     return nearestfoodarr
 
 def directiontofood(canmove: list, myx: int, myy: int, foodx: int, foody: int):
-    # TODO
-    return []
+    tofood = []
+    if foodx > myx and movedown in canmove:
+        tofood.append(movedown)
+    elif foodx < myx and moveup in canmove:
+        tofood.append(moveup)
+    if foody > myy and moveright in canmove:
+        tofood.append(moveright)
+    elif foody < myy and moveleft in canmove:
+        tofood.append(moveleft)
+    return tofood
 
 def createavailablemoves(board, myx, myy):
     validmove = []
