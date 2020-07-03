@@ -1,7 +1,6 @@
 from src.logic import bfsfood, directiontofood, createavailablemoves, nextmove
 
 def test_bfsfood():
-    
     pass
 
 def test_directiontofood():

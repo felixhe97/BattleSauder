@@ -1,8 +1,9 @@
 from .utils.constants import EMPTY, FOOD, INDEXSTART
+from .utils.saudertyping import Board
 from .logic import nextmove
 from typing import Union
 
-def parsesnakeobj(snake: dict, index: int, gameboard: list) -> dict:
+def parsesnakeobj(snake: dict, index: int, gameboard: Board) -> dict:
     # marks gameboard while parsing snake body
     coordarr = []
     for coord in snake['body']:
@@ -19,14 +20,14 @@ def parsesnakeobj(snake: dict, index: int, gameboard: list) -> dict:
             }
     return snakeObj
 
-def parsefood(matrix: list, foodarr: list) -> list:
+def parsefood(matrix: Board, foodarr: list) -> list:
     tempfood = []
     for food in foodarr:
         matrix[food['x']][food['y']] = FOOD
         tempfood.append((food['x'],food['y']))
     return tempfood
 
-def parseopponents(matrix: list, index: int, opponents: list) -> list:
+def parseopponents(matrix: Board, index: int, opponents: list) -> list:
     # fills snakearr with empty arrays so that to iterate over
     # all snakes, use 'for i in range(INDEXSTART, len(snakearr))'
     snakearr: list = [[] for i in range(index)]
