@@ -5,21 +5,13 @@ from typing import Union
 
 def parsesnakeobj(snake: dict, index: int, gameboard: Board) -> dict:
     # marks gameboard while parsing snake body
-    coordarr = []
     for coord in snake['body']:
         x = coord['x']
         y = coord['y']
-        coordarr.append((x, y))
         gameboard[x][y] = index
-    snakeObj = {
-            'id': snake['id'],
-            'hp': snake['health'],
-            'body': coordarr,
-            'head': (snake['head']['x'], snake['head']['y']),
-            'length': snake['length']
-            }
-    return snakeObj
+    return snake
 
+# TODO clean up parsing food and snakes, no need to make new object, work on typing
 def parsefood(matrix: Board, foodarr: list) -> list:
     tempfood = []
     for food in foodarr:

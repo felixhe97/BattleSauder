@@ -1,3 +1,1 @@
-from typing import List
-
-Board = List[List[int]]
+Board = list[list[int]]
