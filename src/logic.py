@@ -1,10 +1,9 @@
 from collections import deque
-from typing import Callable
-from .utils.constants import FOOD, INDEXSTART, EMPTY, NOTEMPTY
+from typing import Callable, List
+from .utils.constants import SNAKEFOOD, MYSNAKE, EMPTY
 from .utils.movement import moveup, movedown, moveleft, moveright
 from .utils.printer import printbattlesnakeboard, printboard, printfood, printsnakes
-from typing import List, Dict
-from .utils.saudertyping import Board
+from .utils.saudertyping import Board, Snake
 import random
 
 def bfsfood(board: Board, startingx: int, startingy: int) -> List:
@@ -21,7 +20,7 @@ def bfsfood(board: Board, startingx: int, startingy: int) -> List:
             # mark on gameboard that we visited empty space
             if board[x][y] == EMPTY:
                 board[x][y] = NOTEMPTY
-            if board[x][y] == FOOD:
+            if board[x][y] == SNAKEFOOD:
                 # also have travel distance as third element
                 nearestfoodarr.append((x, y, bfslevel))
             if x > 0 and board[x-1][y] == EMPTY:
@@ -60,7 +59,7 @@ def createavailablemoves(board: Board, myx: int, myy: int) -> List:
         validmove.append(moveright)
     return validmove
 
-def nextmove(board: Board, food: list, snakes: List) -> Callable[[], dict]:
+def nextmove(gameboard: Board, food: Food, snakes: List[Snake]) -> Callable[[], dict]:
     mysnake = snakes[INDEXSTART]
     myx = mysnake['head'][0]
     myy = mysnake['head'][1]

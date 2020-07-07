@@ -1,39 +1,24 @@
-from .utils.constants import EMPTY, FOOD, INDEXSTART
-from .utils.saudertyping import Board
+from .utils.constants import EMPTY, SNAKEFOOD, MYSNAKE, OPPONENTS
+from .utils.saudertyping import Board, Coordinates, Snake, BattleSnakeResponse
 from .logic import nextmove
-from typing import Union
+from typing import Union, List
 
-def parsesnakeobj(snake: dict, index: int, gameboard: Board) -> dict:
-    # marks gameboard while parsing snake body
-    for coord in snake['body']:
-        x = coord['x']
-        y = coord['y']
-        gameboard[x][y] = index
-    return snake
+def parsesnakes(gameboard: Board, snakes: List[Snake]) -> None:
+    # mutate snake['id'] to be equivalent to index for easy visual parsing
+    snakeindex = MYSNAKE
+    for snake in snakes:
+        snake['id'] = snakeindex
+        for part in snake['body']:
+            # each snake part is marked as snakeindex/snake.id
+            gameboard[part['x']][part['y']] = snake['id'] 
+            snakeindex += 1
 
-# TODO clean up parsing food and snakes, no need to make new object, work on typing
-def parsefood(matrix: Board, foodarr: list) -> list:
-    tempfood = []
+def parsefood(matrix: Board, foodarr: List[Coordinates]) -> None:
     for food in foodarr:
-        matrix[food['x']][food['y']] = FOOD
-        tempfood.append((food['x'],food['y']))
-    return tempfood
+        matrix[food['x']][food['y']] = SNAKEFOOD
 
-def parseopponents(matrix: Board, index: int, opponents: list) -> list:
-    # fills snakearr with empty arrays so that to iterate over
-    # all snakes, use 'for i in range(INDEXSTART, len(snakearr))'
-    snakearr: list = [[] for i in range(index)]
-    for snake in opponents:
-        snakearr.append(parsesnakeobj(snake, index, matrix))
-        index = index + 1
-    return snakearr
-
-def initboard(width: int, height: int, foodarr: list, opponents: list) -> dict:
-    # switch it to graphics x y
-    gameboard = [[EMPTY] * height for i in range(width)]
-    tempfood = parsefood(gameboard, foodarr)
-    snakearr = parseopponents(gameboard, INDEXSTART, opponents)
-    return {'board': gameboard, 'food': tempfood, 'snakes': snakearr}
+def initboard(width: int, height: int) -> Board:
+    return [[EMPTY] * height for i in range(width)]
 
 def end(jsonobj: dict) -> str:
     return ''
@@ -41,10 +26,15 @@ def end(jsonobj: dict) -> str:
 def start(jsonobj: dict) -> str:
     return ''
 
-def move(jsonobj: dict) -> Union[dict, str]:
+def move(jsonobj: dict) -> Union[BattleSnakeResponse, str]:
     if 'you' in jsonobj:
-        ds = initboard(jsonobj['board']['width'], jsonobj['board']['height'],
-            jsonobj['board']['food'], jsonobj['board']['snakes'])
-        return nextmove(ds['board'], ds['food'], ds['snakes'])()
+        gameboard = initboard(jsonobj['board']['width'], jsonobj['board']['height'])
+        food = jsonobj['board']['food']
+        parsefood(gameboard, food)
+        snakes = jsonobj['board']['snakes']
+        parsesnakes(gameboard, snakes)
+        playersnake = snakes[0]
+        opponentsnakes = snakes[1:]
+        return nextmove(gameboard, food, playersnake, opponentsnakes)()
     else:
         return ''
