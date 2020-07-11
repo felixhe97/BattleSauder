@@ -59,17 +59,16 @@ def createavailablemoves(board: Board, myx: int, myy: int) -> List:
         validmove.append(moveright)
     return validmove
 
-def nextmove(gameboard: Board, food: Food, snakes: List[Snake]) -> Callable[[], dict]:
-    mysnake = snakes[INDEXSTART]
+def nextmove(gameboard: Board, food: Food, mysnake: Snake, opponents: List[Snake]) -> Callable[[], dict]:
     myx = mysnake['head'][0]
     myy = mysnake['head'][1]
-    canmove = createavailablemoves(board, myx, myy)
+    canmove = createavailablemoves(gameboard, myx, myy)
     if canmove.count == 0:
         print('no valid moves')
         return moveright
     else:
-        if mysnake['hp'] < (len(board) * 2):
-            nearestfood = bfsfood(board, myx, myy)
+        if mysnake['health'] < (len(gameboard) * 2):
+            nearestfood = bfsfood(gameboard, myx, myy)
             foodx = nearestfood[0]
             foody = nearestfood[1]
             tofood = directiontofood(canmove, myx, myy, foodx, foody)
@@ -79,7 +78,7 @@ def nextmove(gameboard: Board, food: Food, snakes: List[Snake]) -> Callable[[], 
         else:
             print('called canmove')
             print(canmove)
-            printbattlesnakeboard(board)
-            printsnakes(snakes)
+            printbattlesnakeboard(gameboard)
+            printsnakes(opponents)
             printfood(food)
             return random.choice(canmove)
