@@ -3,10 +3,10 @@ from typing import Callable, List
 from .utils.constants import SNAKEFOOD, MYSNAKE, EMPTY
 from .utils.movement import moveup, movedown, moveleft, moveright
 from .utils.printer import printbattlesnakeboard, printboard, printfood, printsnakes
-from .utils.saudertyping import Board, Snake
+from .utils.saudertyping import Board, Snake, Coordinates
 import random
 
-def bfsfood(board: Board, startingx: int, startingy: int) -> List:
+def bfs_food(board: Board, startingx: int, startingy: int) -> List:
     q: deque = deque()
     q.append((startingx, startingy))
     nearestfoodarr = []
@@ -35,7 +35,7 @@ def bfsfood(board: Board, startingx: int, startingy: int) -> List:
         bfslevel += 1
     return nearestfoodarr
 
-def directiontofood(canmove: list, myx: int, myy: int, foodx: int, foody: int) -> List:
+def directions_to_food(canmove: list, myx: int, myy: int, foodx: int, foody: int) -> List:
     tofood = []
     if foodx > myx and movedown in canmove:
         tofood.append(movedown)
@@ -47,7 +47,7 @@ def directiontofood(canmove: list, myx: int, myy: int, foodx: int, foody: int) -
         tofood.append(moveleft)
     return tofood
 
-def createavailablemoves(board: Board, myx: int, myy: int) -> List:
+def available_moves(board: Board, myx: int, myy: int) -> List:
     validmove = []
     if myx > 0 and board[myx-1][myy] == EMPTY:
         validmove.append(moveup)
@@ -59,7 +59,7 @@ def createavailablemoves(board: Board, myx: int, myy: int) -> List:
         validmove.append(moveright)
     return validmove
 
-def nextmove(gameboard: Board, food: Food, mysnake: Snake, opponents: List[Snake]) -> Callable[[], dict]:
+def next_move(gameboard: Board, food: List[Coordinates], mysnake: Snake, opponents: List[Snake]) -> Callable[[], dict]:
     myx = mysnake['head'][0]
     myy = mysnake['head'][1]
     canmove = createavailablemoves(gameboard, myx, myy)

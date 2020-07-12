@@ -3,7 +3,7 @@ from .utils.saudertyping import Board, Coordinates, Snake, BattleSnakeResponse
 from .logic import nextmove
 from typing import Union, List
 
-def parsesnakes(gameboard: Board, snakes: List[Snake]) -> None:
+def parse_snakes(gameboard: Board, snakes: List[Snake]) -> None:
     # mutate snake['id'] to be equivalent to index for easy visual parsing
     snakeindex = MYSNAKE
     for snake in snakes:
@@ -13,11 +13,11 @@ def parsesnakes(gameboard: Board, snakes: List[Snake]) -> None:
             gameboard[part['x']][part['y']] = snake['id'] 
             snakeindex += 1
 
-def parsefood(matrix: Board, foodarr: List[Coordinates]) -> None:
+def parse_food(matrix: Board, foodarr: List[Coordinates]) -> None:
     for food in foodarr:
         matrix[food['x']][food['y']] = SNAKEFOOD
 
-def initboard(width: int, height: int) -> Board:
+def init_board(width: int, height: int) -> Board:
     return [[EMPTY] * height for i in range(width)]
 
 def end(jsonobj: dict) -> str:
